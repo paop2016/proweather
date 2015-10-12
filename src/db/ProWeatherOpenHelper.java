@@ -11,7 +11,7 @@ public class ProWeatherOpenHelper extends SQLiteOpenHelper{
 			"province_name text," +
 			"province_code text)";
 	private String CREATE_CITY="create table City(" +
-			"id integer primaty key autoincrement," +
+			"id integer primary key autoincrement," +
 			"city_name text," +
 			"city_code text," +
 			"province_id integer)";
