@@ -45,6 +45,7 @@ public class ChooseAreaActivity extends Activity{
 	private City selectCity;
 	private County selectCounty;
 	private int currentLevel;
+	private boolean isFromWeatherActivity;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -52,13 +53,14 @@ public class ChooseAreaActivity extends Activity{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.choose_area);
 		
-//		SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);
-//		if(prefs.getBoolean("city_selected", false)) {
-//			Intent intent=new Intent (this,WeatherActivity.class);
-//			startActivity(intent);
-//			finish();
-//			return;
-//		}
+		isFromWeatherActivity=getIntent().getBooleanExtra("from_weather_activity", false);
+		SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);
+		if(prefs.getBoolean("city_selected", false)&&!isFromWeatherActivity) {
+			Intent intent=new Intent (this,WeatherActivity.class);
+			startActivity(intent);
+			finish();
+			return;
+		}
 		listView=(ListView) findViewById(R.id.list_view);
 		titleText=(TextView) findViewById(R.id.title_text);
 		adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
@@ -81,7 +83,7 @@ public class ChooseAreaActivity extends Activity{
 					Intent intent=new Intent(ChooseAreaActivity.this, WeatherActivity.class);
 					intent.putExtra("county_code", countyCode);
 					startActivity(intent);
-//					finish();
+					finish();
 				}
 			}
 		});
@@ -223,12 +225,19 @@ public class ChooseAreaActivity extends Activity{
 			queryProvinces();
 		}
 		else{
-			if(System.currentTimeMillis()-time>2000){
-				time=System.currentTimeMillis();
-				Toast.makeText(this, "Ë«»÷ÍË³öProWeather", 2000).show();
+			if(isFromWeatherActivity) {
+				Intent intent=new Intent(this, WeatherActivity.class);
+				startActivity(intent);
+				finish();
 			}
 			else{
-				finish();
+				if(System.currentTimeMillis()-time>2000){
+					time=System.currentTimeMillis();
+					Toast.makeText(this, "Ë«»÷ÍË³öProWeather", 2000).show();
+				}
+				else{
+					finish();
+				}
 			}
 		}
 	}
