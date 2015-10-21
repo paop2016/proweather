@@ -9,10 +9,10 @@
 	    android:background="#FF9999">
 	    <Button 
 	        android:id="@+id/switch_city"
-	        android:layout_marginLeft="60dp"
+	        android:layout_marginLeft="10dp"
 			android:background="@drawable/home"
-	        android:layout_height="30dp"
-	        android:layout_width="30dp"
+	        android:layout_height="27dp"
+	        android:layout_width="27dp"
 	        android:layout_centerVertical="true"/>
 	    <TextView 
 	        android:id="@+id/county_name"

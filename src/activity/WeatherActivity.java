@@ -1,6 +1,6 @@
 package activity;
 
-import receiver.AutoUpdataReceiver;
+import service.AutoUpdataService;
 import util.HttpCallbackListenner;
 import util.HttpUtil;
 import util.Utility;
@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class WeatherActivity extends Activity implements OnClickListener{
+public class WeatherActivity extends Activity implements OnClickListener {
 	private LinearLayout weatherInfoLayout;
 	private TextView cityNameText;
 	private TextView publishText;
@@ -120,7 +120,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 		currentDateText.setText(prefs.getString("current_date", ""));
 		weatherInfoLayout.setVisibility(View.VISIBLE);
 		cityNameText.setVisibility(View.VISIBLE);
-		Intent intent=new Intent(this, AutoUpdataReceiver.class);
+		Intent intent=new Intent(this, AutoUpdataService.class);
 		startService(intent);
 	}
 	@Override
