@@ -84,7 +84,7 @@ public class Utility {
 	}
 	private static void saveWeatherInfo(Context context, String cityName, String weatherCode, String temp1, String temp2, String weatherDesp, String publishTime) {
 		// TODO Auto-generated method stub
-		SimpleDateFormat sdf=new SimpleDateFormat("y年M月d日h时m分s秒", Locale.CHINA);
+		SimpleDateFormat sdf=new SimpleDateFormat("y-M-d", Locale.CHINA);
 		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
 		editor.putBoolean("city_selected", true);//存疑
 		editor.putString("city_name", cityName);

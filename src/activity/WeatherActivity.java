@@ -5,6 +5,7 @@ import util.HttpCallbackListenner;
 import util.HttpUtil;
 import util.Utility;
 import wang.proweather.R;
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,12 +16,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class WeatherActivity extends Activity implements OnClickListener {
 	private LinearLayout weatherInfoLayout;
+	private RelativeLayout relativeLayout;
 	private TextView cityNameText;
 	private TextView publishText;
 	private TextView weatherDespText;
@@ -29,6 +33,9 @@ public class WeatherActivity extends Activity implements OnClickListener {
 	private TextView currentDateText;
 	private Button switchCity;
 	private Button refreshWeather;
+	ImageView img1;
+	ImageView img2;
+	ImageView img3;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -37,6 +44,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.weather_layout);
 		
 		weatherInfoLayout=(LinearLayout) findViewById(R.id.weather_info_layout);
+		relativeLayout=(RelativeLayout) findViewById(R.id.relativeLayout);
 		cityNameText=(TextView) findViewById(R.id.county_name);
 		publishText=(TextView) findViewById(R.id.publish_text);
 		weatherDespText=(TextView) findViewById(R.id.weather_desp);
@@ -45,6 +53,9 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		currentDateText=(TextView) findViewById(R.id.current_date);
 		switchCity=(Button) findViewById(R.id.switch_city);
 		refreshWeather=(Button) findViewById(R.id.refresh_weather);
+		img1=(ImageView) findViewById(R.id.img1);
+		img2=(ImageView) findViewById(R.id.img2);
+		img3=(ImageView) findViewById(R.id.img3);
 		switchCity.setOnClickListener(this);
 		refreshWeather.setOnClickListener(this);
 		String countyCode=getIntent().getStringExtra("county_code");
@@ -112,16 +123,133 @@ public class WeatherActivity extends Activity implements OnClickListener {
 	private void showWeather() {
 		// TODO Auto-generated method stub
 		SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this);
+		String weatherDesp = prefs.getString("weather_desp", "");
+		String temp1=prefs.getString("temp1", "");
+		String temp2=prefs.getString("temp2", "");
 		cityNameText.setText(prefs.getString("city_name", ""));
-		temp1Text.setText(prefs.getString("temp1", ""));
-		temp2Text.setText(prefs.getString("temp2", ""));
-		weatherDespText.setText(prefs.getString("weather_desp", ""));
+		temp1Text.setText(temp1);
+		temp2Text.setText(temp2);
+		weatherDespText.setText(weatherDesp);
 		publishText.setText("½ñÌì"+prefs.getString("publish_time", "")+"·¢²¼");
 		currentDateText.setText(prefs.getString("current_date", ""));
+		switchImage(weatherDesp,temp1,temp2);
 		weatherInfoLayout.setVisibility(View.VISIBLE);
 		cityNameText.setVisibility(View.VISIBLE);
 		Intent intent=new Intent(this, AutoUpdataService.class);
 		startService(intent);
+	}
+	private void switchImage(String weatherDesp,String temp1,String temp2) {
+		// TODO Auto-generated method stub
+		if(!TextUtils.isEmpty(weatherDesp)){
+			String[] arr = weatherDesp.split("×ª");
+			if(arr.length==2) {
+				img3.setVisibility(View.INVISIBLE);
+				img2.setVisibility(View.VISIBLE);
+				img1.setVisibility(View.VISIBLE);
+				String str1=arr[0];
+				String str2=arr[1];
+				if(str1.equals("Çç")){
+					img1.setImageResource(R.drawable.sunny);
+				}else if(str1.equals("Òõ")){
+					img1.setImageResource(R.drawable.overcast);
+				}else if(str1.equals("¶àÔÆ")){
+					img1.setImageResource(R.drawable.cloudy);
+				}else if(str1.equals("Ð¡Óê")){
+					img1.setImageResource(R.drawable.lightrain);
+				}else if(str1.equals("ÕóÓê")){
+					img1.setImageResource(R.drawable.tstorm);
+				}else if(str1.equals("Ð¡Óê")||str1.equals("´óÓê")){
+					img1.setImageResource(R.drawable.bigrain);
+				}else if(str1.equals("¸¡³¾")){
+					img1.setImageResource(R.drawable.fuchen);
+				}else{
+					img1.setImageResource(R.drawable.no);
+				}
+				if(str2.equals("Çç")){
+					img2.setImageResource(R.drawable.sunny_night);
+				}else if(str2.equals("Òõ")){
+					img2.setImageResource(R.drawable.overcast);
+				}else if(str2.equals("¶àÔÆ")){
+					img2.setImageResource(R.drawable.cloudy_night);
+				}else if(str2.equals("Ð¡Óê")){
+					img2.setImageResource(R.drawable.lightrain);
+				}else if(str2.equals("ÕóÓê")){
+					img2.setImageResource(R.drawable.tstorm);
+				}else if(str2.equals("Ð¡Óê")||str2.equals("´óÓê")){
+					img2.setImageResource(R.drawable.bigrain);
+				}else if(str2.equals("¸¡³¾")){
+					img2.setImageResource(R.drawable.fuchen_night);
+				}else {
+					img2.setImageResource(R.drawable.no);
+				}
+			}
+			else if(arr.length==1){
+				img3.setVisibility(View.VISIBLE);
+				img2.setVisibility(View.INVISIBLE);
+				img1.setVisibility(View.INVISIBLE);
+				String str = arr[0];
+				if(str.equals("Çç")){
+					img3.setImageResource(R.drawable.sunny);
+				}else if(str.equals("Òõ")){
+					img3.setImageResource(R.drawable.overcast);
+				}else if(str.equals("¶àÔÆ")){
+					img3.setImageResource(R.drawable.cloudy);
+				}else if(str.equals("Ð¡Óê")){
+					img3.setImageResource(R.drawable.lightrain);
+				}else if(str.equals("ÕóÓê")){
+					img3.setImageResource(R.drawable.tstorm);
+				}else if(str.equals("Ð¡Óê")||str.equals("´óÓê")){
+					img3.setImageResource(R.drawable.bigrain);
+				}else if(str.equals("¸¡³¾")){
+					img3.setImageResource(R.drawable.fuchen);
+				}else {
+					img3.setImageResource(R.drawable.no);
+				}
+			}
+		}
+//		½âÎöÎÂ¶È
+		if(!TextUtils.isEmpty(temp1)&&!TextUtils.isEmpty(temp2)){
+			String templow=temp1.substring(0, temp1.length()-1);
+			String temphigh=temp2.substring(0, temp2.length()-1);
+			int a = Integer.valueOf(templow).intValue()+Integer.valueOf(temphigh).intValue();
+			if(a>=48){
+				int b=(int) (Math.random()*2);
+				if(b==0){
+					relativeLayout.setBackgroundResource(R.drawable.jay251);
+				}else{
+					relativeLayout.setBackgroundResource(R.drawable.jay252);
+				}
+			}else if(a>=30){
+				int b=(int) (Math.random()*5);
+				if(b==0){
+					relativeLayout.setBackgroundResource(R.drawable.jay151);
+				}else if(b==1){
+					relativeLayout.setBackgroundResource(R.drawable.jay152);
+				}else if(b==2){
+					relativeLayout.setBackgroundResource(R.drawable.jay153);
+				}else{
+					relativeLayout.setBackgroundResource(R.drawable.jay154);
+				}
+			}else if(a>=10){
+				int b=(int) (Math.random()*3);
+				if(b==0){
+					relativeLayout.setBackgroundResource(R.drawable.jay51);
+				}else if(b==1){
+					relativeLayout.setBackgroundResource(R.drawable.jay52);
+				}else{
+					relativeLayout.setBackgroundResource(R.drawable.jay53);
+				}
+			}else{
+				int b=(int) (Math.random()*3);
+				if(b==0){
+					relativeLayout.setBackgroundResource(R.drawable.jay_51);
+				}else if(b==1){
+					relativeLayout.setBackgroundResource(R.drawable.jay_52);
+				}else{
+					relativeLayout.setBackgroundResource(R.drawable.jay_53);
+				}
+			}
+		}
 	}
 	@Override
 	public void onClick(View v) {

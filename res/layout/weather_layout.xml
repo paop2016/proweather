@@ -32,6 +32,7 @@
 	        />
 	</RelativeLayout>
     <RelativeLayout 
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -45,19 +46,55 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:textSize="18sp"/>
+         <TextView 
+            android:layout_below="@id/publish_text"
+            android:id="@+id/current_date"
+            android:textSize="18sp"
+            android:layout_alignRight="@id/publish_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:gravity="center"/>
         <LinearLayout 
             android:id="@+id/weather_info_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical">
-            <TextView 
-                android:id="@+id/current_date"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:textColor="#fff"
-                android:gravity="center"/>
+           <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+				<TextView 
+				    android:id="@+id/flag"
+				    android:layout_width="0dp"
+				    android:layout_height="0dp"
+				    android:layout_centerHorizontal="true"/>
+                <ImageView
+                    android:id="@+id/img1"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignRight="@+id/flag"
+                    android:src="@drawable/sunny_night"
+                    android:layout_alignParentBottom="true"
+                    android:scaleType="fitXY" />
+				<ImageView 
+                    android:id="@+id/img2"
+				    android:layout_width="80dp"
+				    android:layout_marginLeft="20dp"
+				    android:layout_height="80dp"
+				    android:layout_alignLeft="@id/flag"
+                    android:layout_alignParentBottom="true"
+				    android:src="@drawable/cloudy"
+				    android:scaleType="fitXY"/>
+				<ImageView 
+                    android:id="@+id/img3"
+				    android:layout_width="100dp"
+				    android:layout_height="100dp"
+				    android:layout_centerHorizontal="true"
+				    android:src="@drawable/lightrain"
+				    android:scaleType="fitXY"/>
+            </RelativeLayout>
             <TextView 
                 android:id="@+id/weather_desp"
                 android:layout_width="wrap_content"
